@@ -4,21 +4,57 @@ Servidor **MCP (Model Context Protocol)** seguro de **solo lectura** para conect
 
 > Diseñado bajo el principio **secure by default**: el MCP nunca puede modificar datos ni estructura. La seguridad se aplica en múltiples capas (validación de SQL, permisos del usuario, configuración de sesión, timeouts y límites de filas).
 
+> 📦 **Dos repositorios:** el **código** vive en [GK-Leyton/MCP_SQLSERVER](https://github.com/GK-Leyton/MCP_SQLSERVER) (público) y las **credenciales** (`.env`) en un repo **privado** aparte, [GK-Leyton/MCP_SQLSERVER-secrets](https://github.com/GK-Leyton/MCP_SQLSERVER-secrets). El `.env` nunca se versiona en este repo de código.
+
 ---
 
 ## Tabla de contenido
 
-1. [Características](#características)
-2. [Arquitectura de seguridad](#arquitectura-de-seguridad)
-3. [Requisitos previos](#requisitos-previos)
-4. [Instalación paso a paso](#instalación-paso-a-paso)
-5. [Configuración del usuario SQL](#configuración-del-usuario-sql)
-6. [Variables de entorno](#variables-de-entorno)
-7. [Registro en Claude Desktop](#registro-en-claude-desktop)
-8. [Tools expuestos](#tools-expuestos)
-9. [Pruebas](#pruebas)
-10. [Recomendaciones de seguridad adicionales](#recomendaciones-de-seguridad-adicionales)
-11. [Solución de problemas](#solución-de-problemas)
+1. [Inicio rápido](#inicio-rápido)
+2. [Características](#características)
+3. [Arquitectura de seguridad](#arquitectura-de-seguridad)
+4. [Requisitos previos](#requisitos-previos)
+5. [Instalación paso a paso](#instalación-paso-a-paso)
+6. [Configuración del usuario SQL](#configuración-del-usuario-sql)
+7. [Variables de entorno](#variables-de-entorno)
+8. [Registro en Claude Desktop](#registro-en-claude-desktop)
+9. [Tools expuestos](#tools-expuestos)
+10. [Pruebas](#pruebas)
+11. [Recomendaciones de seguridad adicionales](#recomendaciones-de-seguridad-adicionales)
+12. [Solución de problemas](#solución-de-problemas)
+
+---
+
+## Inicio rápido
+
+> Flujo recomendado cuando ya existen los dos repositorios. Para el detalle, ver [Instalación paso a paso](#instalación-paso-a-paso).
+
+```bash
+# 1. Clonar el código (este repo)
+git clone https://github.com/GK-Leyton/MCP_SQLSERVER.git
+cd MCP_SQLSERVER
+
+# 2. Traer el .env desde el repo privado de secretos
+git clone https://github.com/GK-Leyton/MCP_SQLSERVER-secrets.git
+copy MCP_SQLSERVER-secrets\.env .env        # Windows
+# cp MCP_SQLSERVER-secrets/.env ./.env       # Linux / macOS
+
+# 3. Entorno virtual + dependencias
+python -m venv .venv
+.venv\Scripts\activate                       # Windows
+pip install -r requirements.txt
+
+# 4. Probar conexión y tools
+python -m src.server --selftest
+```
+
+**¿Sin acceso al repo de secretos?** Copia la plantilla y edítala a mano:
+
+```bash
+copy .env.example .env        # Windows  (cp .env.example .env en Linux/macOS)
+```
+
+Después registra el MCP en Claude Desktop (ver [Registro en Claude Desktop](#registro-en-claude-desktop)) y reinícialo.
 
 ---
 
