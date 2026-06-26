@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "sqlserver-readonly": {
+      "command": "C:\\xampp\\htdocs\\MCP_SQLSERVER\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "src.server"],
+      "cwd": "C:\\xampp\\htdocs\\MCP_SQLSERVER"
+    }
+  }
+}
